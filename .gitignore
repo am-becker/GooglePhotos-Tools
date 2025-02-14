@@ -1,0 +1,10 @@
+.idea 
+__pycache__ 
+user
+venv
+
+test.py 
+google_photos_api_manager.py 
+
+*.json 
+
