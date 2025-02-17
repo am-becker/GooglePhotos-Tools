@@ -37,7 +37,17 @@ for root, _, files in os.walk(takeout_folder):
             # Get the corresponding image file name
             image_filename = file.replace(".supplemental-metada.json", "")
             image_path = os.path.join(root, image_filename)
+            foundImage = True	
+
+	# Fix for UUID filename truncation
+        if file.endswith(".suppl.json"):
+            json_path = os.path.join(root, file)
+            
+            # Get the corresponding image file name
+            image_filename = file.replace(".suppl.json", "")
+            image_path = os.path.join(root, image_filename)
             foundImage = True
+
 	
         if foundImage:
             

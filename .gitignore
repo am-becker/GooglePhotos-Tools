@@ -3,6 +3,7 @@ __pycache__
 user
 venv
 
+exiftool*
 test.py 
 google_photos_api_manager.py 
 
