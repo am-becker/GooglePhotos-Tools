@@ -114,7 +114,7 @@ def normalize_filename_variants(filename):
         variants.add(filename[1:])  # Add version without the single-letter prefix
     return variants
 
-def check_files(sd_card_paths, local_folder_path):
+def check_files(sd_card_paths, local_folder_paths):
     """
     Checks if all files (images and videos) on the SD cards are present in the local folder.
 
@@ -126,8 +126,11 @@ def check_files(sd_card_paths, local_folder_path):
         dict: A dictionary of missing files for each SD card.
     """
     # Get metadata for files in the local folder
-    print(f"Scanning local folder ({local_folder_path})...")
-    local_files = get_file_info(local_folder_path)
+    
+    local_files = {}
+    for folder in local_folder_paths:
+        print(f"Scanning local folder ({folder})...")
+        local_files |= get_file_info(folder)
 
     # Create a lookup for local files using filename and filesize (and hash if enabled)
     local_lookup = {}
@@ -176,16 +179,17 @@ def main():
         print("Invalid selection. Exiting.")
         return
 
-    # Local folder for photo storage (hardcoded as "D:\Organized")
-    local_folder_path = "D:\\Organized"
+    # Local folders for photo storage
+    local_folder_paths = ["D:\\Lishmoa-Organized", "D:\\Lishmoa-RawFootage"]
 
-    if not os.path.isdir(local_folder_path):
-        print(f"Local folder path '{local_folder_path}' does not exist.")
-        return
+    for path in local_folder_paths:
+        if not os.path.isdir(path):
+            print(f"Local folder path '{path}' does not exist.")
+            return
 
     # Ensure nothing on either drive is modified (read-only operations)
     print("\nComparing files on selected SD cards against the local folder...")
-    missing_files_by_sd = check_files(selected_sd_cards, local_folder_path)
+    missing_files_by_sd = check_files(selected_sd_cards, local_folder_paths)
 
     # Report missing files
     for sd_card, missing_files in missing_files_by_sd.items():
