@@ -4,7 +4,7 @@ import psutil
 from tqdm import tqdm
 
 # Define the list of file extensions for images and videos
-IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".tiff", ".gif", ".heic", ".raw"}
+IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".tiff", ".gif", ".heic", ".raw", ".raf"}
 VIDEO_EXTENSIONS = {".mov", ".mp4"}
 
 # Flag to toggle between full hashing and filename/filesize matching
@@ -82,7 +82,7 @@ def get_file_info(directory):
     for root, _, files in os.walk(directory):
         for file in files:
             file_extension = os.path.splitext(file)[1].lower()
-            if file_extension in IMAGE_EXTENSIONS or file_extension in VIDEO_EXTENSIONS:
+            if file_extension in IMAGE_EXTENSIONS or file_extension in VIDEO_EXTENSIONS or True:
                 filepath = os.path.join(root, file)
                 filesize = os.path.getsize(filepath)
 
@@ -143,6 +143,7 @@ def check_files(sd_card_paths, local_folder_paths):
     for sd_card_path in sd_card_paths:
         print(f"\nScanning SD card ({sd_card_path})...")
         sd_files = get_file_info(sd_card_path)
+        #print(sd_files)
 
         # Find files on the SD card that are not in the local folder
         missing_files = []
@@ -180,7 +181,7 @@ def main():
         return
 
     # Local folders for photo storage
-    local_folder_paths = ["D:\\Lishmoa-Organized", "D:\\Lishmoa-RawFootage"]
+    local_folder_paths = ["E:\\Lishmoa-Organized", "E:\\Lishmoa-RawFootage"]
 
     for path in local_folder_paths:
         if not os.path.isdir(path):
